@@ -5,6 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D rb2d;
+
+    public Animator playerAnim;
     [SerializeField] private LayerMask groundMask;
     private float moveInput;
     public float moveSpeed;
@@ -31,6 +33,7 @@ public class Player : MonoBehaviour
     {
         InputSystem();
         checkGround();
+        Animations();
     }
 
     private void FixedUpdate()
@@ -86,8 +89,11 @@ public class Player : MonoBehaviour
         rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
     }
 
-    private void Run()
+    private void Animations()
     {
-        
+        playerAnim.SetFloat("SpeedX", Mathf.Abs(moveInput));
+        playerAnim.SetFloat("SpeedY", rb2d.velocity.y);
+        playerAnim.SetBool("isOnGround", onGround);
+        playerAnim.SetFloat("CurrentSpeed", moveSpeed);
     }
 }
