@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public float moveSpeed;
     public float runSpeed;
     public float jumpForce;
+    private int moreJumps;
     
 
     // ground circle collider
@@ -96,13 +97,15 @@ public class Player : MonoBehaviour
             transform.localScale = new Vector3(moveInput, 1f, 1f);
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && onGround)
+        if(Input.GetKeyDown(KeyCode.Space) && (onGround || (moreJumps < 1 && rb2d.velocity.y > 0)))
         {
+            moreJumps++;
             Jump();
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isSliding)
         {
+            moreJumps = 1000;
             rb2d.velocity = Vector2.zero;
             rb2d.velocity = new Vector2(wallJumpForce * -moveInput, wallJumpForce);
             onSliding = true;
@@ -141,6 +144,7 @@ public class Player : MonoBehaviour
         if(colliders_1.Length > 0 || colliders_2.Length > 0)
         {
             onGround = true;
+            moreJumps = 0;
         } else
         {
             onGround = false;
@@ -207,5 +211,14 @@ public class Player : MonoBehaviour
         {
             GameController.instance.RestartGame();
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(groundCheck[0].position, groundCheckRadius);
+        Gizmos.DrawSphere(groundCheck[1].position, groundCheckRadius);
+
+        Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y, wallCheck.position.z));
     }
 }
