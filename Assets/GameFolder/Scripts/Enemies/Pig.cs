@@ -40,7 +40,22 @@ public class Pig : MonoBehaviour
 
     public void Death()
     {
-        Destroy(transform.parent.gameObject);
-    }
+        if (transform.parent != null)
+        {
+            Transform[] siblingObjects = transform.parent.GetComponentsInChildren<Transform>();
 
+            if (siblingObjects.Length > 2)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Destroy(transform.parent.gameObject);
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 }
