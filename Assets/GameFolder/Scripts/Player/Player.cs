@@ -29,6 +29,23 @@ public class Player : MonoBehaviour
     private float slopeAngle;
     private bool onSlope;
 
+    // slide system
+    [Header("Slide System ----------")]
+    public Transform wallCheck;
+    private bool isColliderWall;
+    public float wallCheckDistance;
+    public bool isSliding;
+    private const float WallSlideSpeedCap = 0.5f;
+
+    [Header("Wall fall speed")]
+    public float wallSlideSpeed;
+
+    [Header("Wall jump speed")]
+    public float wallJumpForce;
+
+    private bool onSliding;
+
+
 
 
     // Start is called before the first frame update
@@ -45,10 +62,12 @@ public class Player : MonoBehaviour
         checkGround();
         Animations();
         Slopes();
+        Slide();
     }
 
     private void FixedUpdate()
     {
+        if(!onSliding)
         Move();
     }
 
@@ -72,7 +91,7 @@ public class Player : MonoBehaviour
     {
         moveInput = Input.GetAxisRaw("Horizontal");
 
-        if(moveInput != 0f)
+        if(moveInput != 0f && !onSliding)
         {
             transform.localScale = new Vector3(moveInput, 1f, 1f);
         }
@@ -82,6 +101,14 @@ public class Player : MonoBehaviour
             Jump();
         }
 
+        if (Input.GetKeyDown(KeyCode.Space) && isSliding)
+        {
+            rb2d.velocity = Vector2.zero;
+            rb2d.velocity = new Vector2(wallJumpForce * -moveInput, wallJumpForce);
+            onSliding = true;
+            StartCoroutine(jumpSlide());
+        }
+
         if (Input.GetKey(KeyCode.J))
         {
             moveSpeed = runSpeed;
@@ -89,7 +116,14 @@ public class Player : MonoBehaviour
         else
         {
             moveSpeed = 5f;
+            onSliding = false;
         }
+    }
+
+    IEnumerator jumpSlide()
+    {
+        transform.localScale = new Vector3(-moveInput, 1f, 1f);
+        yield return new WaitForSeconds(0.3f);
     }
 
     void checkGround()
@@ -140,11 +174,30 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Slide()
+    {
+        isColliderWall = Physics2D.Raycast(wallCheck.position, wallCheck.TransformDirection(Vector2.right), wallCheckDistance, groundMask);
+
+        if(isColliderWall && rb2d.velocity.y < 0 && moveInput != 0)
+        {
+            isSliding = true;
+        } else
+        {
+            isSliding = false;
+        }
+
+        if(isSliding && rb2d.velocity.y < -wallSlideSpeed)
+        {
+            rb2d.velocity = new Vector2(rb2d.velocity.x, -wallSlideSpeed);
+        }
+    }
+
     private void Animations()
     {
         playerAnim.SetFloat("SpeedX", Mathf.Abs(moveInput));
         playerAnim.SetFloat("SpeedY", rb2d.velocity.y);
         playerAnim.SetBool("isOnGround", onGround);
         playerAnim.SetFloat("CurrentSpeed", moveSpeed);
+        playerAnim.SetBool("isSliding", isSliding);
     }
 }
