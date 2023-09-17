@@ -60,6 +60,7 @@
     <Compile Include="Assets\GameFolder\Scripts\Enemies\Pig.cs" />
     <Compile Include="Assets\GameFolder\Scripts\Player\Player.cs" />
     <Compile Include="Assets\GameFolder\Scripts\CameraFollow.cs" />
+    <Compile Include="Assets\GameFolder\Scripts\GameController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

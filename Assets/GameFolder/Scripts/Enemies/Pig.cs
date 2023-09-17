@@ -40,7 +40,7 @@ public class Pig : MonoBehaviour
 
     public void Death()
     {
-        Destroy(this.gameObject);
+        Destroy(transform.parent.gameObject);
     }
 
 }

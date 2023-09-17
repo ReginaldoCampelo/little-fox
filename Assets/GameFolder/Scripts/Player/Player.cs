@@ -200,4 +200,12 @@ public class Player : MonoBehaviour
         playerAnim.SetFloat("CurrentSpeed", moveSpeed);
         playerAnim.SetBool("isSliding", isSliding);
     }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.layer == 8)
+        {
+            GameController.instance.RestartGame();
+        }
+    }
 }
