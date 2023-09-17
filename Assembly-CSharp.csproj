@@ -57,11 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\GameFolder\Scripts\Enemies\EnemyHead.cs" />
+    <Compile Include="Assets\GameFolder\Scripts\GameController.cs" />
     <Compile Include="Assets\GameFolder\Scripts\Enemies\Pig.cs" />
+    <Compile Include="Assets\GameFolder\Scripts\Items\Crank.cs" />
     <Compile Include="Assets\GameFolder\Scripts\Player\Player.cs" />
     <Compile Include="Assets\GameFolder\Scripts\CameraFollow.cs" />
-    <Compile Include="Assets\GameFolder\Scripts\GameController.cs" />
-    <Compile Include="Assets\GameFolder\Scripts\Items\Crank.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -330,6 +330,12 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.14f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.14f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.14f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
