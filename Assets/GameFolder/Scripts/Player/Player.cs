@@ -97,7 +97,16 @@ public class Player : MonoBehaviour
             transform.localScale = new Vector3(moveInput, 1f, 1f);
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && (onGround || (moreJumps < 1 && rb2d.velocity.y > 0)))
+        if (Input.GetKey(KeyCode.J))
+        {
+            moveSpeed = runSpeed;
+        }
+        else
+        {
+            moveSpeed = 5f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && (onGround || (moreJumps < 1 && rb2d.velocity.y > 0)))
         {
             moreJumps++;
             Jump();
@@ -112,13 +121,8 @@ public class Player : MonoBehaviour
             StartCoroutine(jumpSlide());
         }
 
-        if (Input.GetKey(KeyCode.J))
+        if(!isSliding && rb2d.velocity.y < 0)
         {
-            moveSpeed = runSpeed;
-        }
-        else
-        {
-            moveSpeed = 5f;
             onSliding = false;
         }
     }
