@@ -27,6 +27,7 @@ public class EnemyHead : MonoBehaviour
 
             other.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(
                 other.gameObject.GetComponent<Rigidbody2D>().velocity.x, 15f);
+            anim.gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 }
