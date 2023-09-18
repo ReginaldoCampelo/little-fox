@@ -166,7 +166,7 @@ public class Player : MonoBehaviour
     {
         RaycastHit2D hitSlope = Physics2D.Raycast(transform.position, Vector2.down, slopeCheckDistance, groundMask);
 
-        if(hitSlope)
+        if(hitSlope && !isJump)
         {
             slopeAngle = Vector2.Angle(hitSlope.normal, Vector2.up);
 
@@ -179,6 +179,9 @@ public class Player : MonoBehaviour
             {
                 rb2d.sharedMaterial = noFriction;
             }
+        }else
+        {
+            rb2d.sharedMaterial = noFriction;
         }
     }
 
