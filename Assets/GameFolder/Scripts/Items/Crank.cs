@@ -9,6 +9,9 @@ public class Crank : MonoBehaviour
     public Transform gate;
     private bool isActived;
     public Transform wayPoint;
+    [Header("Controller Cam")]
+    public CameraFollow cam;
+    public Transform player;
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +24,11 @@ public class Crank : MonoBehaviour
         if(Vector2.Distance(gate.position, wayPoint.position) > 0.1f)
         {
             gate.position = Vector2.MoveTowards(gate.position, wayPoint.position, 10f *  Time.deltaTime);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.05f);
             StartCoroutine(MoveGate());
+        } else
+        {
+            if (player  != null) { cam.target = player; }
         }
     }
 
@@ -32,6 +38,7 @@ public class Crank : MonoBehaviour
         {
             isActived = true;
             spriteRenderer.sprite = crank_down;
+            if(cam != null) { cam.target = gate; }
             StartCoroutine(MoveGate());
         }
     }
