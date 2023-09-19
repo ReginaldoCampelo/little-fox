@@ -62,6 +62,7 @@
     <Compile Include="Assets\GameFolder\Scripts\Items\Crank.cs" />
     <Compile Include="Assets\GameFolder\Scripts\Player\Player.cs" />
     <Compile Include="Assets\GameFolder\Scripts\CameraFollow.cs" />
+    <Compile Include="Assets\GameFolder\Scripts\Items\Gem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
