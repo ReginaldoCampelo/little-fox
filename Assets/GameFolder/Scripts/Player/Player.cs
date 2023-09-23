@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public float runSpeed;
     public float jumpForce;
     private int moreJumps;
+    public bool isDead;
     
 
     // ground circle collider
@@ -31,22 +32,20 @@ public class Player : MonoBehaviour
     private bool onSlope;
 
     // slide system
-    [Header("Slide System ----------")]
+    [Header("Slide System")]
     public Transform wallCheck;
     private bool isColliderWall;
     public float wallCheckDistance;
     public bool isSliding;
-    private const float WallSlideSpeedCap = 0.5f;
 
     [Header("Wall fall speed")]
     public float wallSlideSpeed;
 
     [Header("Wall jump speed")]
     public float wallJumpForce;
-
     private bool onSliding;
 
-
+    private bool isLandGround = true;
 
 
     // Start is called before the first frame update
@@ -74,7 +73,10 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        if(onSlope && !isJump){
+        if (isDead)
+            return;
+
+        if (onSlope && !isJump){
             rb2d.gravityScale = 20f;
             if(rb2d.velocity.y < -2f){
                 rb2d.velocity = new Vector2(moveInput * moveSpeed, -9f);
@@ -90,6 +92,9 @@ public class Player : MonoBehaviour
 
     private void InputSystem()
     {
+        if (isDead)
+            return;
+
         moveInput = Input.GetAxisRaw("Horizontal");
 
         if(moveInput != 0f && !onSliding)
@@ -112,7 +117,7 @@ public class Player : MonoBehaviour
             Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isSliding)
+        if (Input.GetKeyDown(KeyCode.Space) && isSliding && moveInput !=0)
         {
             moreJumps = 1000;
             rb2d.velocity = Vector2.zero;
@@ -131,6 +136,7 @@ public class Player : MonoBehaviour
     {
         transform.localScale = new Vector3(-moveInput, 1f, 1f);
         yield return new WaitForSeconds(0.3f);
+        onSliding = false;
     }
 
     void checkGround()
@@ -160,6 +166,7 @@ public class Player : MonoBehaviour
         isJump = true;
         rb2d.gravityScale = 3f;
         rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
+        SFXController.instance.SFX("PlayerJump", 0.5f);
     }
 
     private void Slopes()
@@ -179,9 +186,16 @@ public class Player : MonoBehaviour
             {
                 rb2d.sharedMaterial = noFriction;
             }
-        }else
+
+            if(!isLandGround)
+            {
+                SFXController.instance.SFX("LandGround", 0.4f);
+                isLandGround = true;
+            }
+        } else
         {
             rb2d.sharedMaterial = noFriction;
+            isLandGround = false;
         }
     }
 
@@ -214,10 +228,23 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.gameObject.layer == 8)
+        if(other.gameObject.layer == 8 && !isDead)
         {
-            GameController.instance.RestartGame();
+            isDead = true;
+            rb2d.bodyType = RigidbodyType2D.Kinematic;
+            rb2d.velocity = Vector2.zero;
+
+            SFXController.instance.SFX("DeathPlayer", 1f);
+            playerAnim.SetTrigger("isDead");
+
+            StartCoroutine(RestartAfterDelay());
         }
+    }
+
+    private IEnumerator RestartAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        GameController.instance.RestartGame();
     }
 
     private void OnDrawGizmosSelected()

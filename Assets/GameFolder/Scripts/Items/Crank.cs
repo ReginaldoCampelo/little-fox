@@ -25,6 +25,10 @@ public class Crank : MonoBehaviour
         {
             gate.position = Vector2.MoveTowards(gate.position, wayPoint.position, 10f *  Time.deltaTime);
             yield return new WaitForSeconds(0.05f);
+            if (!SFXController.instance.audioSource[2].isPlaying)
+            {
+                SFXController.instance.SFX("Gate", 1f);
+            }
             StartCoroutine(MoveGate());
         } else
         {
@@ -39,6 +43,7 @@ public class Crank : MonoBehaviour
             isActived = true;
             spriteRenderer.sprite = crank_down;
             if(cam != null) { cam.target = gate; }
+            SFXController.instance.SFX("Crank", 0.5f);
             StartCoroutine(MoveGate());
         }
     }

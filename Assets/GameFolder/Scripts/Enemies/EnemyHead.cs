@@ -23,6 +23,7 @@ public class EnemyHead : MonoBehaviour
         if (other.gameObject.layer == 6)
         {
             anim.gameObject.GetComponent<Pig>().speedMove = 0f;
+            SFXController.instance.SFX("DeathEnemy", 1f);
             anim.Play("Explosion");
 
             other.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(

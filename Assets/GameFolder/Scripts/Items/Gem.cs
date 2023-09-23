@@ -26,6 +26,7 @@ public class Gem : MonoBehaviour
         {
             box2D.enabled = false;
             anim.Play("Explosion");
+            SFXController.instance.SFX("Gem", 1f);
             GameController.instance.UpdateUIGems();
         }
     }
