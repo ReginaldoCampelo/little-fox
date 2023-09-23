@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     private float groundCheckRadius = 0.036f;
     public Transform[] groundCheck;
     [SerializeField] private LayerMask groundMask;
+    [HideInInspector] public bool isPlayerStopped;
     [SerializeField] private bool onGround;
 
     // slopes system
@@ -92,9 +93,18 @@ public class Player : MonoBehaviour
 
     private void InputSystem()
     {
-        if (isDead)
+        if (isPlayerStopped)
+        {
+            moveInput = 0;
             return;
+        }
+            
 
+        if (isDead)
+        {
+           return;
+        }
+            
         moveInput = Input.GetAxisRaw("Horizontal");
 
         if(moveInput != 0f && !onSliding)

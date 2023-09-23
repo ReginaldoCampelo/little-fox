@@ -29,10 +29,12 @@ public class Crank : MonoBehaviour
             {
                 SFXController.instance.SFX("Gate", 1f);
             }
+            player.GetComponent<Player>().isPlayerStopped = true;
             StartCoroutine(MoveGate());
         } else
         {
             if (player  != null) { cam.target = player; }
+            player.GetComponent<Player>().isPlayerStopped = false;
         }
     }
 

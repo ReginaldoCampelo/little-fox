@@ -7,6 +7,13 @@ public class GameController : MonoBehaviour
 {
     public int totalGems;
     public GameObject[] UIGems;
+    public GameObject player;
+
+    [Header("Camera System")]
+    public CameraFollow cam;
+
+    [Header("GameObject Gate")]
+    public Transform focusGate;
 
     public static GameController instance;
 
@@ -40,5 +47,24 @@ public class GameController : MonoBehaviour
                 UIGems[2].SetActive(true);
                 break;
         }
+
+        if(totalGems == 1)
+        {
+            CamChangeFocus(focusGate, 2f);
+        }
+    }
+
+    public void CamChangeFocus(Transform transform, float time)
+    {
+        if(cam != null){ cam.target = transform; }
+        player.GetComponent<Player>().isPlayerStopped = true;
+        StartCoroutine(IEReturnFocusPlayer(time));
+    }
+
+    IEnumerator IEReturnFocusPlayer(float time)
+    {
+        yield return new WaitForSeconds(time);
+        if (player != null) { cam.target = player.transform; }
+        player.GetComponent<Player>().isPlayerStopped = false;
     }
 }
