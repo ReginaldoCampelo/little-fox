@@ -8,6 +8,12 @@ public class Pig : MonoBehaviour
     private bool goRight;
     [Header("Movement Velocity")]
     public float speedMove = 6f;
+    private Animator anim;
+
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
 
     // Update is called once per frame
@@ -56,6 +62,16 @@ public class Pig : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == 10)
+        {
+            speedMove = 0f;
+            anim.Play("Explosion");
+            SFXController.instance.SFX("DeathEnemy", 1f);
         }
     }
 }

@@ -31,4 +31,14 @@ public class EnemyHead : MonoBehaviour
             anim.gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 10)
+        {
+            anim.gameObject.GetComponent<Pig>().speedMove = 0f;
+            anim.Play("Explosion");
+            SFXController.instance.SFX("DeathEnemy", 1f);
+        }
+    }
 }

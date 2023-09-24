@@ -14,16 +14,19 @@ public class GameController : MonoBehaviour
 
     [Header("GameObject Gate")]
     public Transform focusGate;
+    public int totalBullets;
 
     public static GameController instance;
 
     void Awake()
     {
-        instance = this;
-    }
-
-    void Update()
-    {
+        if(instance == null)
+        {
+            instance = this;
+        }else
+        {
+            Destroy(gameObject);
+        }
         
     }
 

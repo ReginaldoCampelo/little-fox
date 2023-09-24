@@ -48,6 +48,10 @@ public class Player : MonoBehaviour
 
     private bool isLandGround = true;
 
+    [Header("Prefab Bullet")]
+    public GameObject bullet;
+    public float speedBullet = 20f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +64,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         InputSystem();
+        CreateBullet();
         checkGround();
         GhostPlatform();
         Animations();
@@ -140,6 +145,16 @@ public class Player : MonoBehaviour
         if(!isSliding && rb2d.velocity.y < 0)
         {
             onSliding = false;
+        }
+    }
+
+    void CreateBullet()
+    {
+        if(Input.GetKeyDown(KeyCode.K) && GameController.instance.totalBullets > 0)
+        {
+            GameObject b = Instantiate(bullet, wallCheck.position, Quaternion.identity);
+            b.GetComponent<Bullet>().xVelocity = transform.localScale.x * speedBullet;
+            GameController.instance.totalBullets--;
         }
     }
 
@@ -277,6 +292,21 @@ public class Player : MonoBehaviour
         if (collision.gameObject.layer == 9)
         {
             transform.parent = null;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 8 && !isDead)
+        {
+            isDead = true;
+            rb2d.bodyType = RigidbodyType2D.Kinematic;
+            rb2d.velocity = Vector2.zero;
+
+            SFXController.instance.SFX("DeathPlayer", 1f);
+            playerAnim.SetTrigger("isDead");
+
+            StartCoroutine(RestartAfterDelay());
         }
     }
 
