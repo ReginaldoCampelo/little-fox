@@ -48,9 +48,10 @@ public class GameController : MonoBehaviour
                 break;
         }
 
-        if(totalGems == 1)
+        if(totalGems >= 3)
         {
             CamChangeFocus(focusGate, 2f);
+            StartCoroutine(IEDisableGate(1f));
         }
     }
 
@@ -66,5 +67,14 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(time);
         if (player != null) { cam.target = player.transform; }
         player.GetComponent<Player>().isPlayerStopped = false;
+    }
+
+    IEnumerator IEDisableGate(float time)
+    {
+        yield return new WaitForSeconds(time);
+        focusGate.GetComponent<Animator>().Play("Explosion");
+        SFXController.instance.SFX("Door", 1f);
+        yield return new WaitForSeconds(time);
+        focusGate.gameObject.SetActive(false);
     }
 }

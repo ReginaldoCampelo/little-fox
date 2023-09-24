@@ -45,6 +45,14 @@ public class SFXController : MonoBehaviour
                 audioSource[6].volume = volume;
                 audioSource[6].Play();
                 break;
+            case "Door":
+                audioSource[7].volume = volume;
+                audioSource[7].Play();
+                break;
+            case "Trampoline":
+                audioSource[8].volume = volume;
+                audioSource[8].Play();
+                break;
         }
     }
 }

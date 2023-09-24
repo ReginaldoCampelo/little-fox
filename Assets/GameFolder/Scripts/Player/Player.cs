@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
     {
         InputSystem();
         checkGround();
+        GhostPlatform();
         Animations();
         Slopes();
         Slide();
@@ -171,6 +172,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void GhostPlatform()
+    {
+        if((colliders_1.Length > 0 && colliders_1[0].gameObject.layer == 9) ||
+            (colliders_2.Length > 0 && colliders_2[0].gameObject.layer == 9))
+        {
+            if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+            {
+                Physics2D.IgnoreLayerCollision(6, 9, true);
+            } else if(Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S) || onGround)
+            {
+                Physics2D.IgnoreLayerCollision(6, 9, false);
+            }
+        }
+    }
+
     private void Jump()
     {
         isJump = true;
@@ -236,9 +252,9 @@ public class Player : MonoBehaviour
         playerAnim.SetBool("isSliding", isSliding);
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(other.gameObject.layer == 8 && !isDead)
+        if(collision.gameObject.layer == 8 && !isDead)
         {
             isDead = true;
             rb2d.bodyType = RigidbodyType2D.Kinematic;
@@ -248,6 +264,19 @@ public class Player : MonoBehaviour
             playerAnim.SetTrigger("isDead");
 
             StartCoroutine(RestartAfterDelay());
+        }
+
+        if(collision.gameObject.layer == 9 && collision.transform.position.y < transform.position.y)
+        {
+            transform.parent = collision.transform;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 9)
+        {
+            transform.parent = null;
         }
     }
 
