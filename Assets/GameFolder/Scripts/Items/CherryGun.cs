@@ -21,6 +21,8 @@ public class CherryGun : MonoBehaviour
             anim.Play("Explosion");
             SFXController.instance.SFX("Gem", 1f);
             GameController.instance.totalBullets += 1;
+            GameController.instance.UpdateTotalCherries();
+
         }
     }
 

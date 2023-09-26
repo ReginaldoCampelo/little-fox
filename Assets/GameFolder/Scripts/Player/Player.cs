@@ -155,6 +155,7 @@ public class Player : MonoBehaviour
             GameObject b = Instantiate(bullet, wallCheck.position, Quaternion.identity);
             b.GetComponent<Bullet>().xVelocity = transform.localScale.x * speedBullet;
             GameController.instance.totalBullets--;
+            GameController.instance.UpdateTotalCherries();
         }
     }
 

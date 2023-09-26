@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class GameController : MonoBehaviour
     public Transform focusGate;
     public int totalBullets;
 
+    public Text UITotalCherries;
+
     public static GameController instance;
 
     void Awake()
@@ -27,7 +30,8 @@ public class GameController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
+        UpdateTotalCherries();
     }
 
     public void RestartGame()
@@ -79,5 +83,10 @@ public class GameController : MonoBehaviour
         SFXController.instance.SFX("Door", 1f);
         yield return new WaitForSeconds(time);
         focusGate.gameObject.SetActive(false);
+    }
+
+    public void UpdateTotalCherries()
+    {
+        UITotalCherries.text = totalBullets.ToString();
     }
 }

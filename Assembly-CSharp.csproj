@@ -59,17 +59,17 @@
     <Compile Include="Assets\GameFolder\Scripts\Enemies\EnemyHead.cs" />
     <Compile Include="Assets\GameFolder\Scripts\Items\Trampoline.cs" />
     <Compile Include="Assets\GameFolder\Scripts\Items\Gem.cs" />
+    <Compile Include="Assets\GameFolder\Scripts\Items\CherryGun.cs" />
     <Compile Include="Assets\GameFolder\Scripts\GameController.cs" />
     <Compile Include="Assets\GameFolder\Scripts\Enemies\Pig.cs" />
     <Compile Include="Assets\GameFolder\Scripts\LoadScene.cs" />
     <Compile Include="Assets\GameFolder\Scripts\Items\Crank.cs" />
     <Compile Include="Assets\GameFolder\Scripts\PlatformMove.cs" />
+    <Compile Include="Assets\GameFolder\Scripts\Items\Bullet.cs" />
+    <Compile Include="Assets\GameFolder\Scripts\Enemies\Fly.cs" />
     <Compile Include="Assets\GameFolder\Scripts\Player\Player.cs" />
     <Compile Include="Assets\GameFolder\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\GameFolder\Scripts\SFXController.cs" />
-    <Compile Include="Assets\GameFolder\Scripts\Items\CherryGun.cs" />
-    <Compile Include="Assets\GameFolder\Scripts\Items\Bullet.cs" />
-    <Compile Include="Assets\GameFolder\Scripts\Enemies\Fly.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ShootingSound\ReadMe.txt" />
