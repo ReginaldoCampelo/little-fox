@@ -70,6 +70,7 @@
     <Compile Include="Assets\GameFolder\Scripts\Player\Player.cs" />
     <Compile Include="Assets\GameFolder\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\GameFolder\Scripts\SFXController.cs" />
+    <Compile Include="Assets\GameFolder\Scripts\Parallax.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ShootingSound\ReadMe.txt" />
