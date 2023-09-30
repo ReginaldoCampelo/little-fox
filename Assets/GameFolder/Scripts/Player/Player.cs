@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
 
     void CreateBullet()
     {
-        if(Input.GetKeyDown(KeyCode.K) && GameController.instance.totalBullets > 0)
+        if(Input.GetKeyDown(KeyCode.K) && GameController.instance.totalBullets > 0 && !isSliding)
         {
             GameObject b = Instantiate(bullet, wallCheck.position, Quaternion.identity);
             b.GetComponent<Bullet>().xVelocity = transform.localScale.x * speedBullet;
